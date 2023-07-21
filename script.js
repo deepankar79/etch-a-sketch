@@ -6,6 +6,7 @@ const btnR = document.querySelector(".btnR");
 const btnE = document.querySelector(".btnE");
 const btnRB = document.querySelector(".btnRB");
 const btnC = document.querySelector(".btnC");
+const btnRGB = document.querySelector(".btnRGB");
 const color = document.getElementById("colorInput");
 
 const createGrid = function (size) {
@@ -23,6 +24,23 @@ const colorGrid = function () {
   colr.forEach((cl) =>
     cl.addEventListener("mouseover", function (e) {
       cl.style.backgroundColor = color.value;
+    })
+  );
+};
+
+const randomColor = function () {
+  let hue, saturation, lightness;
+  hue = Math.floor(Math.random() * 361);
+  saturation = Math.floor(Math.random() * 101);
+  lightness = Math.floor(Math.random() * 101);
+  return `hsl(${hue},${saturation}%,${lightness}%)`;
+};
+
+const randomRGB = function () {
+  const colr = document.querySelectorAll(".grid-items");
+  colr.forEach((cl) =>
+    cl.addEventListener("mouseover", function (e) {
+      cl.style.backgroundColor = randomColor();
     })
   );
 };
@@ -66,3 +84,5 @@ btnE.addEventListener("click", eraser);
 btnRB.addEventListener("click", resetBoard);
 
 btnC.addEventListener("click", colorGrid);
+
+btnRGB.addEventListener("click", randomRGB);
