@@ -1,27 +1,32 @@
 "use strict";
-let el;
-const fdiv = document.querySelector(".div1");
+
+let el, uchoice;
+const btns = document.querySelectorAll(".butt");
 const fele = document.getElementById("main");
 const pickColor = document.getElementById("colorInput");
 const color = document.querySelector(".grid");
+
+//function to create grid
 const createGrid = function (size) {
   for (let i = 0; i < size * size; i++) {
     el = document.createElement("div");
-    fdiv.style.gridTemplateColumns = `repeat(${size}, minmax(0,1fr))`;
-    fdiv.style.gridTemplateRows = `repeat(${size}, minmax(0,1fr))`;
+    color.style.gridTemplateColumns = `repeat(${size}, minmax(0,1fr))`;
+    color.style.gridTemplateRows = `repeat(${size}, minmax(0,1fr))`;
     el.classList.add(`gridR--${i + 1}`, "grid-items");
-    fdiv.appendChild(el);
+    color.appendChild(el);
   }
 };
 
+//function for Color input by user
+
 const colorGrid = function () {
-  const colr = document.querySelectorAll(".grid-items");
-  colr.forEach((cl) =>
-    cl.addEventListener("mouseover", function (e) {
-      cl.style.backgroundColor = pickColor.value;
-    })
-  );
+  color.addEventListener("mouseover", function (e) {
+    if (e.target.classList.contains("grid-items"))
+      e.target.style.backgroundColor = pickColor.value;
+  });
 };
+
+//function returns a random color
 
 const randomColor = function () {
   let hue, saturation, lightness;
@@ -31,8 +36,9 @@ const randomColor = function () {
   return `hsl(${hue},${saturation}%,${lightness}%)`;
 };
 
+//function for rgb button
 const randomRGB = function () {
-  fdiv.addEventListener("mouseover", function (e) {
+  color.addEventListener("mouseover", function (e) {
     if (e.target.classList.contains("grid-items"))
       e.target.style.backgroundColor = randomColor();
   });
@@ -50,16 +56,15 @@ const prgDrk = function () {
 
 const darken = function () {
   darkness = 90;
-  const colr = document.querySelector(".grid");
-  colr.addEventListener("mouseover", function (e) {
+  color.addEventListener("mouseover", function (e) {
     if (e.target.classList.contains("grid-items"))
       e.target.style.backgroundColor = prgDrk();
   });
 };
 
+//function for eraser button
 const eraser = function () {
-  const colr = document.querySelector(".grid");
-  colr.addEventListener("mouseover", function (e) {
+  color.addEventListener("mouseover", function (e) {
     if (e.target.classList.contains("grid-items"))
       e.target.style.backgroundColor = "white";
   });
@@ -68,6 +73,7 @@ const eraser = function () {
 createGrid(16);
 colorGrid();
 
+//function for new grid input by user(resetGrid button)
 const resetGrid = function () {
   let choice;
   do {
@@ -75,22 +81,20 @@ const resetGrid = function () {
   } while (choice > 100);
   if (choice === null || choice === "") return;
 
-  while (fdiv.firstChild) {
-    fdiv.removeChild(fdiv.lastChild);
+  while (color.firstChild) {
+    color.removeChild(color.lastChild);
   }
 
   createGrid(choice);
   colorGrid();
 };
 
+//clears grid
 const resetBoard = function () {
   const colr = document.querySelectorAll(".grid-items");
   colr.forEach((c1) => (c1.style.backgroundColor = "white"));
 };
 
-const btns = document.querySelectorAll(".butt");
-
-let uchoice;
 btns.forEach((button) =>
   button.addEventListener("click", function (e) {
     uchoice = e.target.innerText;
