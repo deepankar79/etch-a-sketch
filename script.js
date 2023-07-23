@@ -2,14 +2,8 @@
 let el;
 const fdiv = document.querySelector(".div1");
 const fele = document.getElementById("main");
-const btnR = document.querySelector(".btnR");
-const btnE = document.querySelector(".btnE");
-const btnRB = document.querySelector(".btnRB");
-const btnC = document.querySelector(".btnC");
-const btnRGB = document.querySelector(".btnRGB");
-const btnDRK = document.querySelector(".btnDRK");
-const color = document.getElementById("colorInput");
-
+const pickColor = document.getElementById("colorInput");
+const color = document.querySelector(".grid");
 const createGrid = function (size) {
   for (let i = 0; i < size * size; i++) {
     el = document.createElement("div");
@@ -24,7 +18,7 @@ const colorGrid = function () {
   const colr = document.querySelectorAll(".grid-items");
   colr.forEach((cl) =>
     cl.addEventListener("mouseover", function (e) {
-      cl.style.backgroundColor = color.value;
+      cl.style.backgroundColor = pickColor.value;
     })
   );
 };
@@ -38,12 +32,10 @@ const randomColor = function () {
 };
 
 const randomRGB = function () {
-  const colr = document.querySelectorAll(".grid-items");
-  colr.forEach((cl) =>
-    cl.addEventListener("mouseover", function (e) {
-      cl.style.backgroundColor = randomColor();
-    })
-  );
+  fdiv.addEventListener("mouseover", function (e) {
+    if (e.target.classList.contains("grid-items"))
+      e.target.style.backgroundColor = randomColor();
+  });
 };
 
 let darkness = 90;
@@ -58,21 +50,19 @@ const prgDrk = function () {
 
 const darken = function () {
   darkness = 90;
-  const colr = document.querySelectorAll(".grid-items");
-  colr.forEach((cl) =>
-    cl.addEventListener("mouseover", function (e) {
-      cl.style.backgroundColor = prgDrk();
-    })
-  );
+  const colr = document.querySelector(".grid");
+  colr.addEventListener("mouseover", function (e) {
+    if (e.target.classList.contains("grid-items"))
+      e.target.style.backgroundColor = prgDrk();
+  });
 };
 
 const eraser = function () {
-  const colr = document.querySelectorAll(".grid-items");
-  colr.forEach((c1) =>
-    c1.addEventListener("mouseover", function (e) {
-      c1.style.backgroundColor = "white";
-    })
-  );
+  const colr = document.querySelector(".grid");
+  colr.addEventListener("mouseover", function (e) {
+    if (e.target.classList.contains("grid-items"))
+      e.target.style.backgroundColor = "white";
+  });
 };
 
 createGrid(16);
@@ -98,14 +88,17 @@ const resetBoard = function () {
   colr.forEach((c1) => (c1.style.backgroundColor = "white"));
 };
 
-btnR.addEventListener("click", resetGrid);
+const btns = document.querySelectorAll(".butt");
 
-btnE.addEventListener("click", eraser);
-
-btnRB.addEventListener("click", resetBoard);
-
-btnC.addEventListener("click", colorGrid);
-
-btnRGB.addEventListener("click", randomRGB);
-
-btnDRK.addEventListener("click", darken);
+let uchoice;
+btns.forEach((button) =>
+  button.addEventListener("click", function (e) {
+    uchoice = e.target.innerText;
+    if (uchoice === "Reset Grid") resetGrid();
+    else if (uchoice === "Reset board") resetBoard();
+    else if (uchoice === "Color grid") colorGrid();
+    else if (uchoice === "RGB") randomRGB();
+    else if (uchoice === "Drakening") darken();
+    else if (uchoice === "Eraser") eraser();
+  })
+);
