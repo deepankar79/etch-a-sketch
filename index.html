@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Etch a Sketch</h1>
+    <div class="heading"><h1>Etch a Sketch</h1></div>
     <div>
       <ul class="butt">
         <li><button class="btn btnR">Reset Grid</button></li>
         <li><button class="btn btnRB">Reset board</button></li>
         <li><button class="btn btnC">Pick color</button></li>
+        <input id="colorInput" class="cinp" type="color" />
         <li><button class="btn btnRGB">RGB</button></li>
         <li><button class="btn btnDRK">Darkening</button></li>
         <li><button class="btn btnE">Eraser</button></li>
       </ul>
     </div>
-    <input id="colorInput" type="color" />
 
     <div id="main" class="grid"></div>
     <script src="script.js"></script>

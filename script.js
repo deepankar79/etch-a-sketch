@@ -1,6 +1,6 @@
 "use strict";
 
-let el, uchoice;
+let el, uchoice, hue, saturation, lightness;
 const btns = document.querySelectorAll(".butt");
 const fele = document.getElementById("main");
 const pickColor = document.getElementById("colorInput");
@@ -20,22 +20,20 @@ const createGrid = function (size) {
 //function returns a random color
 
 const randomColor = function () {
-  let hue, saturation, lightness;
   hue = Math.floor(Math.random() * 361);
   saturation = Math.floor(Math.random() * (101 - 10) + 10);
   lightness = Math.floor(Math.random() * (81 - 20) + 20);
   return `hsl(${hue},${saturation}%,${lightness}%)`;
 };
 
+//function used to darken grid progressively
 let darkness = 90;
 const prgDrk = function () {
   if (darkness < 0) darkness = 90;
-  let hue, saturation, lightness;
-  hue = Math.floor(Math.random() * 361);
-  saturation = Math.floor(Math.random() * (101 - 10) + 10);
+  hue = 0;
+  saturation = 0;
   lightness = darkness;
   darkness -= 10;
-
   return `hsl(${hue},${saturation}%,${lightness}%)`;
 };
 
@@ -60,6 +58,8 @@ const resetBoard = function () {
   const colr = document.querySelectorAll(".grid-items");
   colr.forEach((c1) => (c1.style.backgroundColor = "white"));
 };
+
+//function for user choice i.e. Button Pressed
 const userInput = function (choice) {
   if (choice === "Reset Grid") {
     resetGrid();
@@ -87,6 +87,8 @@ const userInput = function (choice) {
     }
   });
 };
+
+//Selecting actions for any button that is clicked
 
 btns.forEach((button) =>
   button.addEventListener("click", function (e) {
